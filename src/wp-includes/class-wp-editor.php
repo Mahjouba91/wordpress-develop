@@ -928,6 +928,8 @@ final class _WP_Editors {
 	 * Returns the default TinyMCE settings.
 	 * Doesn't include plugins, buttons, editor selector.
 	 *
+	 * @global string $tinymce_version
+	 *
 	 * @return array
 	 */
 	private static function default_settings() {
@@ -1564,9 +1566,12 @@ final class _WP_Editors {
 	}
 
 	/**
+	 * Outputs the HTML for distraction-free writing mode.
+	 *
+	 * @since 3.2.0
+	 * @deprecated 4.3.0
 	 *
 	 * @static
-	 * @global int $content_width
 	 */
 	public static function wp_fullscreen_html() {
 		_deprecated_function( __FUNCTION__, '4.3.0' );
