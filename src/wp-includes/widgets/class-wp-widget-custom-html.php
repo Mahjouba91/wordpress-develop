@@ -61,7 +61,8 @@ class WP_Widget_Custom_HTML extends WP_Widget {
 		/** This filter is documented in wp-includes/widgets/class-wp-widget-pages.php */
 		$title = apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base );
 
-		$content = $instance['content'];
+		/** This filter is documented in wp-includes/widgets/class-wp-widget-text.php */
+		$content = apply_filters( 'widget_text', $instance['content'], $instance, $this );
 
 		/**
 		 * Filters the content of the Custom HTML widget.
@@ -74,11 +75,16 @@ class WP_Widget_Custom_HTML extends WP_Widget {
 		 */
 		$content = apply_filters( 'widget_custom_html_content', $content, $instance, $this );
 
+		// Inject the Text widget's container class name alongside this widget's class name for theme styling compatibility.
+		$args['before_widget'] = preg_replace( '/(?<=\sclass=["\'])/', 'widget_text ', $args['before_widget'] );
+
 		echo $args['before_widget'];
 		if ( ! empty( $title ) ) {
 			echo $args['before_title'] . $title . $args['after_title'];
 		}
+		echo '<div class="textwidget custom-html-widget">'; // The textwidget class is for theme styling compatibility.
 		echo $content;
+		echo '</div>';
 		echo $args['after_widget'];
 	}
 

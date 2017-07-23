@@ -1856,6 +1856,9 @@ function wp_get_upload_dir() {
  * @since 2.0.0
  * @uses _wp_upload_dir()
  *
+ * @staticvar array $cache
+ * @staticvar array $tested_paths
+ *
  * @param string $time Optional. Time formatted in 'yyyy/mm'. Default null.
  * @param bool   $create_dir Optional. Whether to check and create the uploads directory.
  *                           Default true for backward compatibility.
@@ -4363,7 +4366,7 @@ function wp_suspend_cache_addition( $suspend = null ) {
 /**
  * Suspend cache invalidation.
  *
- * Turns cache invalidation on and off. Useful during imports where you don't wont to do
+ * Turns cache invalidation on and off. Useful during imports where you don't want to do
  * invalidations every time a post is inserted. Callers must be sure that what they are
  * doing won't lead to an inconsistent cache when invalidation is suspended.
  *
