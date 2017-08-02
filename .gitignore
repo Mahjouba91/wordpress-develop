@@ -56,3 +56,6 @@ wp-tests-config.php
 *.patch
 *.diff
 .svn
+composer.json
+composer.lock
+vendor/
