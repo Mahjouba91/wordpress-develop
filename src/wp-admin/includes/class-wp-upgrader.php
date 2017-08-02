@@ -345,9 +345,9 @@ class WP_Upgrader {
 		$_files = $wp_filesystem->dirlist( $remote_destination, true, true );
 
 		// Flatten the resulting array, iterate using each as we append to the array during iteration.
-		while ( $f = each( $_files ) ) {
-			$file = $f['value'];
-			$name = $f['key'];
+		foreach( $_files as $key => $value ) {
+			$file = $value;
+			$name = $key;
 
 			if ( ! isset( $file['files'] ) ) {
 				continue;
