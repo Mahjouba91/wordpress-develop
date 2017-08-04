@@ -381,6 +381,7 @@ class TranslationMultipleFormCallback {
 	 * @return string
 	 */
 	public function callback($n){
+		echo 'GGGGGGGGGGGGGGGGGGGGG';
 		$index = intval(@eval('return (' . $this->expression . ');'));
 		return $index < $this->nplurals ? $index : $this->nplurals - 1;
 	}
