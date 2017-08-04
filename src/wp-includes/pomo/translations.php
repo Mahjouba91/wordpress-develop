@@ -201,11 +201,8 @@ class Gettext_Translations extends Translations {
 	 * @param string $expression
 	 */
 	function make_plural_form_function($nplurals, $expression) {
-		$expression = str_replace('n', '$n', $expression);
-		$func_body = "
-			\$index = (int)($expression);
-			return (\$index < $nplurals)? \$index : $nplurals - 1;";
-		return create_function('$n', $func_body);
+		$callback = new TranslationMultipleFormCallback($nplurals, $expression);
+		return array( $callback, 'callback');
 	}
 
 	/**
@@ -353,6 +350,39 @@ class NOOP_Translations {
 	 * @param object $other
 	 */
 	function merge_with(&$other) {
+	}
+}
+endif;
+
+if ( ! class_exists( 'TranslationMultipleFormCallback', false ) ):
+
+/**
+ * Provides a callable holding data, which will return the right translation
+ * index, according to the plural forms header.
+ * @see https://core.trac.wordpress.org/ticket/37082.
+ * Since create_function() was deprecated in PHP 7.2, and to support PHP 5.2,
+ * which does not has closure support, this class is used to set some data, and
+ * pass a valid callback that can be called with call_user_func() function,
+ * or with $callback($arguments) syntax since PHP 5.4 and later. Ideally, this
+ * should be replaced with a full closure when WordPress requires PHP 5.3
+ * minimum.
+ */
+class TranslationMultipleFormCallback {
+	private $expression;
+	private $nplurals;
+
+	public function __construct($nplurals, $expression) {
+		$this->expression = str_replace('n', '$n', $expression);
+		$this->nplurals = $nplurals;
+	}
+
+	/**
+	 * @param $n
+	 * @return string
+	 */
+	public function callback($n){
+		$index = intval(@eval('return (' . $this->expression . ');'));
+		return $index < $this->nplurals ? $index : $this->nplurals - 1;
 	}
 }
 endif;
