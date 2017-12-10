@@ -3032,7 +3032,7 @@ class WP_Query {
 			 */
 			$this->found_posts = $wpdb->get_var( apply_filters_ref_array( 'found_posts_query', array( 'SELECT FOUND_ROWS()', &$this ) ) );
 		} else {
-			$this->found_posts = count( $this->posts );
+			$this->found_posts = $this->posts ? count( $this->posts ) : 0;
 		}
 
 		/**
