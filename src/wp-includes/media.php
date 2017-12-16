@@ -67,23 +67,23 @@ function image_constrain_size_for_editor( $width, $height, $size = 'medium', $co
 		$max_width  = $size[0];
 		$max_height = $size[1];
 	} elseif ( $size == 'thumb' || $size == 'thumbnail' ) {
-		$max_width  = intval( get_option( 'thumbnail_size_w' ) );
-		$max_height = intval( get_option( 'thumbnail_size_h' ) );
+		$max_width  = (int) get_option( 'thumbnail_size_w' );
+		$max_height = (int) get_option( 'thumbnail_size_h' );
 		// last chance thumbnail size defaults
 		if ( ! $max_width && ! $max_height ) {
 			$max_width  = 128;
 			$max_height = 96;
 		}
 	} elseif ( $size == 'medium' ) {
-		$max_width  = intval( get_option( 'medium_size_w' ) );
-		$max_height = intval( get_option( 'medium_size_h' ) );
+		$max_width  = (int) get_option( 'medium_size_w' );
+		$max_height = (int) get_option( 'medium_size_h' );
 
 	} elseif ( $size == 'medium_large' ) {
-		$max_width  = intval( get_option( 'medium_large_size_w' ) );
-		$max_height = intval( get_option( 'medium_large_size_h' ) );
+		$max_width  = (int) get_option( 'medium_large_size_w' );
+		$max_height = (int) get_option( 'medium_large_size_h' );
 
-		if ( intval( $content_width ) > 0 ) {
-			$max_width = min( intval( $content_width ), $max_width );
+		if ((int) $content_width > 0 ) {
+			$max_width = min( (int) $content_width, $max_width );
 		}
 	} elseif ( $size == 'large' ) {
 		/*
@@ -92,17 +92,17 @@ function image_constrain_size_for_editor( $width, $height, $size = 'medium', $co
 		 * itself, and within the theme's content width if it's known. The user
 		 * can resize it in the editor if they wish.
 		 */
-		$max_width  = intval( get_option( 'large_size_w' ) );
-		$max_height = intval( get_option( 'large_size_h' ) );
-		if ( intval( $content_width ) > 0 ) {
-			$max_width = min( intval( $content_width ), $max_width );
+		$max_width  = (int) get_option( 'large_size_w' );
+		$max_height = (int) get_option( 'large_size_h' );
+		if ((int) $content_width > 0 ) {
+			$max_width = min( (int) $content_width, $max_width );
 		}
 	} elseif ( ! empty( $_wp_additional_image_sizes ) && in_array( $size, array_keys( $_wp_additional_image_sizes ) ) ) {
-		$max_width  = intval( $_wp_additional_image_sizes[ $size ]['width'] );
-		$max_height = intval( $_wp_additional_image_sizes[ $size ]['height'] );
+		$max_width  = (int) $_wp_additional_image_sizes[ $size ]['width'];
+		$max_height = (int) $_wp_additional_image_sizes[ $size ]['height'];
 		// Only in admin. Assume that theme authors know what they're doing.
-		if ( intval( $content_width ) > 0 && 'edit' === $context ) {
-			$max_width = min( intval( $content_width ), $max_width );
+		if ((int) $content_width > 0 && 'edit' === $context ) {
+			$max_width = min( (int) $content_width, $max_width );
 		}
 	} // $size == 'full' has no constraint
 	else {
@@ -147,10 +147,10 @@ function image_constrain_size_for_editor( $width, $height, $size = 'medium', $co
 function image_hwstring( $width, $height ) {
 	$out = '';
 	if ( $width ) {
-		$out .= 'width="' . intval( $width ) . '" ';
+		$out .= 'width="' . (int) $width . '" ';
 	}
 	if ( $height ) {
-		$out .= 'height="' . intval( $height ) . '" ';
+		$out .= 'height="' . (int) $height . '" ';
 	}
 	return $out;
 }
@@ -1686,7 +1686,7 @@ function gallery_shortcode( $attr ) {
 		), $attr, 'gallery'
 	);
 
-	$id = intval( $atts['id'] );
+	$id = (int) $atts['id'];
 
 	if ( ! empty( $atts['include'] ) ) {
 		$_attachments = get_posts(
@@ -1755,7 +1755,7 @@ function gallery_shortcode( $attr ) {
 		$icontag = 'dt';
 	}
 
-	$columns   = intval( $atts['columns'] );
+	$columns   = (int) $atts['columns'];
 	$itemwidth = $columns > 0 ? floor( 100 / $columns ) : 100;
 	$float     = is_rtl() ? 'right' : 'left';
 
@@ -2003,7 +2003,7 @@ function wp_playlist_shortcode( $attr ) {
 		), $attr, 'playlist'
 	);
 
-	$id = intval( $atts['id'] );
+	$id = (int) $atts['id'];
 
 	if ( $atts['type'] !== 'audio' ) {
 		$atts['type'] = 'video';
@@ -3879,7 +3879,7 @@ function get_post_galleries( $post, $html = true ) {
 
 				// Specify the post id of the gallery we're viewing if the shortcode doesn't reference another post already.
 				if ( ! isset( $shortcode_attrs['id'] ) ) {
-					$shortcode[3] .= ' id="' . intval( $post->ID ) . '"';
+					$shortcode[3] .= ' id="' . (int) $post->ID . '"';
 				}
 
 				$gallery = do_shortcode_tag( $shortcode );
