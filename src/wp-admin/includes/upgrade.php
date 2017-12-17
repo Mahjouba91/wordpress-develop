@@ -870,7 +870,7 @@ function upgrade_110() {
 
 		// Add or subtract time to all dates, to get GMT dates
 		$add_hours   = (int) $diff_gmt_weblogger;
-		$add_minutes = (int) (60 * ($diff_gmt_weblogger - $add_hours ));
+		$add_minutes = (int) ( 60 * ( $diff_gmt_weblogger - $add_hours ) );
 		$wpdb->query( "UPDATE $wpdb->posts SET post_date_gmt = DATE_ADD(post_date, INTERVAL '$add_hours:$add_minutes' HOUR_MINUTE)" );
 		$wpdb->query( "UPDATE $wpdb->posts SET post_modified = post_date" );
 		$wpdb->query( "UPDATE $wpdb->posts SET post_modified_gmt = DATE_ADD(post_modified, INTERVAL '$add_hours:$add_minutes' HOUR_MINUTE) WHERE post_modified != '0000-00-00 00:00:00'" );

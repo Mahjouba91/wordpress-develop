@@ -2950,7 +2950,7 @@ function wp_ajax_send_attachment_to_editor() {
 
 	if ( current_user_can( 'edit_post', $id ) ) {
 		// If this attachment is unattached, attach it. Primarily a back compat thing.
-		if ( 0 == $post->post_parent && $insert_into_post_id = (int) $_POST['post_id']) {
+		if ( 0 == $post->post_parent && $insert_into_post_id = (int) $_POST['post_id'] ) {
 			wp_update_post(
 				array(
 					'ID'          => $id,
@@ -3366,7 +3366,7 @@ function wp_ajax_parse_embed() {
 		if ( ! isset( $content_width ) ) {
 			$content_width = (int) $_POST['maxwidth'];
 		} else {
-			$content_width = min( $content_width, (int) $_POST['maxwidth']);
+			$content_width = min( $content_width, (int) $_POST['maxwidth'] );
 		}
 	}
 
